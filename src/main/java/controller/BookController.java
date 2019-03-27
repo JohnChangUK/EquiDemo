@@ -17,7 +17,11 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class BookController {
 
-    BookService bookService = new BookService();
+    private BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Path("/books")
     @GET
