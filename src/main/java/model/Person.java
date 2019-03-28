@@ -8,6 +8,8 @@ public class Person {
     private int id;
     private String name;
 
+    public Person() {}
+
     public Person(String json) {
         Gson gson = new Gson();
         Person request = gson.fromJson(json, Person.class);

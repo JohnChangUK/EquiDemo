@@ -1,5 +1,6 @@
 package lambda.request;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
@@ -7,6 +8,7 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Person")
 public class PersonRequest {
 
+    @DynamoDBHashKey
     private String id;
     private String firstName;
     private String lastName;
