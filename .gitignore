@@ -3,3 +3,4 @@
 vcs.xml
 misc.xml
 compiler.xml
+postgres-conf.yml

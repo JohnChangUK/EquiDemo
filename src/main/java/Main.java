@@ -1,23 +1,22 @@
-import controller.BookController;
+import db.BookDAO;
 import io.dropwizard.Application;
-import io.dropwizard.Configuration;
-import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
-import service.BookService;
+import org.skife.jdbi.v2.DBI;
+import resource.BookResource;
 
-public class Main extends Application<Configuration> {
+public class Main extends Application<PostgresConfiguration> {
 
     public static void main(String[] args) throws Exception {
         new Main().run(args);
     }
 
     @Override
-    public void initialize(Bootstrap<Configuration> bootstrap) {
-
-    }
-
-    @Override
-    public void run(Configuration configuration, Environment environment) {
-        environment.jersey().register(new BookController(new BookService()));
+    public void run(PostgresConfiguration configuration, Environment environment) {
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(),
+                "postgresql");
+        final BookDAO bookDAO = jdbi.onDemand(BookDAO.class);
+        environment.jersey().register(new BookResource(bookDAO));
     }
 }
