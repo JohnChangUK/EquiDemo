@@ -22,7 +22,7 @@ public interface BookDAO {
     @SqlUpdate("delete from books.book where id = :id")
     int deleteById(@Bind("id") int id);
 
-    @SqlUpdate("update books.book set title = :title where id = :id")
+    @SqlUpdate("update books.book set title = :title, pages = :pages where id = :id")
     int update(@BindBean Book book);
 
     @SqlUpdate("insert into books.book (id, title, pages) values (:id, :title, :pages)")

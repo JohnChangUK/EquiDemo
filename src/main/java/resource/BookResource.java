@@ -13,7 +13,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+import javax.ws.rs.core.Response;
+
+import static javax.ws.rs.core.Response.Status.OK;
 
 @Path("/books")
 @Consumes({MediaType.APPLICATION_JSON})
@@ -27,28 +29,28 @@ public class BookResource {
     }
 
     @GET
-    public List<Book> getAll() {
-        return bookDao.getBooks();
+    public Response getAllBooks() {
+        return Response.status(OK).entity(bookDao.getBooks()).build();
     }
 
     @GET
     @Path("/{id}")
-    public Book get(@PathParam("id") Integer id) {
-        return bookDao.findById(id);
+    public Response get(@PathParam("id") Integer id) {
+        return Response.status(OK).entity(bookDao.findById(id)).build();
     }
 
     @POST
-    public Book add(@Valid Book book) {
+    public Response add(@Valid Book book) {
         bookDao.insert(book);
-        return book;
+        return Response.status(OK).entity(book).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Book update(@PathParam("id") Integer id, @Valid Book book) {
+    public Response update(@PathParam("id") Integer id, @Valid Book book) {
         Book updatedBook = new Book(id, book.getTitle(), book.getPages());
         bookDao.update(updatedBook);
-        return updatedBook;
+        return Response.status(OK).entity(updatedBook).build();
     }
 
     @DELETE
